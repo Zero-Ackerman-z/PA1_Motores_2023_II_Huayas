@@ -25,13 +25,19 @@ public class HealthBarController : MonoBehaviour
     /// Metodo <c>UpdateHealth</c> actualiza la vida del personaje de manera visual. Recibe una cantidad de vida modificada.
     /// </summary>
     /// <param name="amount">El valor de vida modificada.</param>
-    public void UpdateHealth(int amount){
-        currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
+    public void UpdateHealth(int amount)
+    {
+        // Asegúrate de que el objeto con el que colisiona tenga el tag "Player" o la capa "PlayerLayer"
+        if (gameObject.CompareTag("Player"))
+        {
+            currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
 
-        if(updateHealthBarCoroutine != null){
-            StopCoroutine(updateHealthBarCoroutine);
+            if (updateHealthBarCoroutine != null)
+            {
+                StopCoroutine(updateHealthBarCoroutine);
+            }
+            updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
         }
-        updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
     }
 
     IEnumerator AdjustWidthBar(int amount){

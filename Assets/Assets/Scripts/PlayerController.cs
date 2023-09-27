@@ -9,9 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rayDistance = 10f;
     [SerializeField] private AnimatorController animatorController;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    public GameObject bala;
-
-    private void Update() {
+    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint;
+    private void Update()
+    {
         Vector2 movementPlayer = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         myRBD2.velocity = movementPlayer * velocityModifier;
 
@@ -20,17 +21,24 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseInput = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         CheckFlip(mouseInput.x);
-    
+
         Debug.DrawRay(transform.position, mouseInput.normalized * rayDistance, Color.red);
 
-        if(Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0))
+        {
             Debug.Log("Right Click");
-        }else if(Input.GetMouseButtonDown(1)){
+
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
             Debug.Log("Left Click");
+
         }
     }
 
-    private void CheckFlip(float x_Position){
+    private void CheckFlip(float x_Position)
+    {
         spriteRenderer.flipX = (x_Position - transform.position.x) < 0;
     }
+    
 }
